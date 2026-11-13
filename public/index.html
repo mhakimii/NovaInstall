@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaInstall</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <!-- Loading -->
+    <div id="screen-loading" class="screen active">
+      <div class="spinner"></div>
+      <p data-i18n="loading">در حال بارگذاری...</p>
+    </div>
+
+    <!-- Welcome / First-run credentials -->
+    <div id="screen-welcome" class="screen">
+      <div class="card welcome-card">
+        <div class="logo">Nova<span>Install</span></div>
+        <h1 data-i18n="welcome_title">نصب با موفقیت انجام شد 🎉</h1>
+        <p class="muted" data-i18n="welcome_desc">اطلاعات ورود اولیه شما در زیر آمده است. این صفحه فقط یک‌بار نمایش داده می‌شود.</p>
+
+        <div class="cred-box">
+          <div class="cred-row">
+            <span data-i18n="username">نام کاربری</span>
+            <code id="cred-username">admin</code>
+          </div>
+          <div class="cred-row">
+            <span data-i18n="password">رمز عبور</span>
+            <code id="cred-password">—</code>
+            <button type="button" class="btn-icon" id="btn-copy-pass" title="Copy">📋</button>
+          </div>
+        </div>
+
+        <p class="warning" data-i18n="welcome_warning">
+          لطفاً این رمز را در جای امنی ذخیره کنید. بعد از ورود حتماً آن را تغییر دهید.
+        </p>
+
+        <button class="btn primary" id="btn-go-login" data-i18n="go_to_login">ورود به پنل</button>
+      </div>
+    </div>
+
+    <!-- Login -->
+    <div id="screen-login" class="screen">
+      <div class="card login-card">
+        <div class="logo">Nova<span>Install</span></div>
+        <h1 data-i18n="login_title">ورود به پنل</h1>
+        <p class="muted" data-i18n="login_subtitle">پنل ادمین عمومی</p>
+
+        <form id="form-login">
+          <label>
+            <span data-i18n="username">نام کاربری</span>
+            <input type="text" id="login-username" name="username" autocomplete="username" required value="admin" />
+          </label>
+          <label>
+            <span data-i18n="password">رمز عبور</span>
+            <input type="password" id="login-password" name="password" autocomplete="current-password" required />
+          </label>
+          <div id="login-error" class="error" hidden></div>
+          <button type="submit" class="btn primary" data-i18n="login_btn">ورود</button>
+        </form>
+
+        <div class="lang-switch">
+          <button type="button" data-lang="fa" class="lang-btn active">فارسی</button>
+          <button type="button" data-lang="en" class="lang-btn">English</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change password (forced) -->
+    <div id="screen-change-pass" class="screen">
+      <div class="card">
+        <div class="logo">Nova<span>Install</span></div>
+        <h1 data-i18n="change_pass_title">تغییر رمز عبور</h1>
+        <p class="muted" data-i18n="change_pass_desc">برای امنیت بیشتر، لطفاً رمز عبور خود را تغییر دهید.</p>
+
+        <form id="form-change-pass">
+          <label>
+            <span data-i18n="current_password">رمز فعلی</span>
+            <input type="password" id="cp-current" required />
+          </label>
+          <label>
+            <span data-i18n="new_password">رمز جدید</span>
+            <input type="password" id="cp-new" required minlength="8" />
+          </label>
+          <label>
+            <span data-i18n="confirm_password">تکرار رمز جدید</span>
+            <input type="password" id="cp-confirm" required minlength="8" />
+          </label>
+          <div id="cp-error" class="error" hidden></div>
+          <button type="submit" class="btn primary" data-i18n="save_password">ذخیره رمز جدید</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="screen-dashboard" class="screen">
+      <header class="topbar">
+        <div class="logo small">Nova<span>Install</span></div>
+        <div class="topbar-actions">
+          <div class="lang-switch compact">
+            <button type="button" data-lang="fa" class="lang-btn">FA</button>
+            <button type="button" data-lang="en" class="lang-btn">EN</button>
+          </div>
+          <span id="user-badge" class="user-badge"></span>
+          <button type="button" class="btn ghost" id="btn-logout" data-i18n="logout">خروج</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <h1 data-i18n="dashboard_title">داشبورد</h1>
+        <p class="muted" data-i18n="dashboard_subtitle">خوش آمدید به پنل ادمین</p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label" data-i18n="app_name">نام برنامه</div>
+            <div class="stat-value" id="stat-app">NovaInstall</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" data-i18n="version">نسخه</div>
+            <div class="stat-value" id="stat-version">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" data-i18n="installed_at">تاریخ نصب</div>
+            <div class="stat-value" id="stat-installed">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" data-i18n="activity">فعالیت‌ها</div>
+            <div class="stat-value" id="stat-activity">—</div>
+          </div>
+        </div>
+
+        <section class="panel">
+          <h2 data-i18n="account_section">حساب کاربری</h2>
+          <button type="button" class="btn secondary" id="btn-open-change-pass" data-i18n="change_password">
+            تغییر رمز عبور
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
